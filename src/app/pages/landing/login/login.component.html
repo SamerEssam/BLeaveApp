@@ -1,0 +1,29 @@
+<div class="container">
+
+  <form class="col-4" [formGroup]="loginForm" (ngSubmit)="onSumbit(loginForm.value)">
+    <h3>Sign In</h3>
+
+    <div>
+      <label class="label">Email</label>
+      <input class="form-control input" type="email" formControlName="email" placeholder="Email" />
+      <div *ngIf="email.invalid && !email.pristine">
+        <p *ngIf="email.errors.email">Valid email is required.</p>
+      </div>
+    </div>
+
+    <div>
+      <label class="label">Password</label>
+      <input class="form-control input" type="password" formControlName="password" autocomplete="off"
+        placeholder="Password" />
+      <div *ngIf="password.invalid && !password.pristine">
+        <p *ngIf="password.errors.minlength">Password should be at least 6 characters.</p>
+      </div>
+    </div>
+
+    <div>
+      <button type="submit" [disabled]="!loginForm.valid" class="btn btn-primary ">Login</button>
+    </div>
+
+  </form>
+
+</div>

@@ -1,0 +1,27 @@
+<div>
+  <p>
+    <a [routerLink]="['/profile/newrequest']">Create a request</a>
+  </p>
+
+  <div class="table-wrapper-scroll-y my-custom-scrollbar">
+    <table class="table table-striped" style=" text-align: center">
+      <thead>
+        <tr>
+          <th>Leave Type</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let request of myReqList">
+          <td>{{request.leaveType }}</td>
+          <td>{{request.from}}</td>
+          <td>{{request.to}}</td>
+          <td>{{request.reqState}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

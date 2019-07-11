@@ -1,0 +1,12 @@
+/* .navbar-fixed-left {
+    height: 100%;
+    border: 3px solid black; 
+    align-items: flex-start;
+    height: 100%;
+}
+ */
+ #sidebar{
+     height: 100%;
+     padding-top: 20px;
+     width: 7em;
+ }

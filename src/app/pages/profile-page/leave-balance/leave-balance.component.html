@@ -1,0 +1,20 @@
+<div>
+  <table class="table table-striped" style="margin-top: 40px; text-align: center">
+    <thead>
+      <tr class="">
+        <th>Leave Type</th>
+        <th>Total</th>
+        <th>Balance</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let userBalance of userBalances">
+        <td>{{userBalance.leaveType}}</td>
+        <td>{{userBalance.total}}</td>
+        <td>{{userBalance.balance}}</td>
+      </tr>
+
+    </tbody>
+  </table>
+
+</div>

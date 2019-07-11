@@ -1,0 +1,38 @@
+<!-- import { moduleOrComponent } from 'path'; -->
+<div class="col-9 offset-1" style="margin-top: 40px; text-align: center; height: 820px;">
+  <div class="table-wrapper-scroll-y my-custom-scrollbar">
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Balance</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let request of reqList">
+          <td>{{request.requesterName }}</td>
+          <td>{{request.leaveType}}</td>
+          <td>{{request.availBalance}}</td>
+          <td>{{request.from}}</td>
+          <td>{{request.to}}</td>
+
+          <ng-container *ngIf="request.reqState == 'Pendding'; else elseTemplate">
+            <td class="btn-group">
+              <input type="button" class="btn btn-success" value="Accept" (click)="acceptRequest(request.requestId)">
+              <input type="button" class="btn btn-danger" value="Reject" (click)="rejectRequest(request.requestId)">
+            </td>
+          </ng-container>
+          <ng-template #elseTemplate>
+            <td>{{request.reqState}}</td>
+          </ng-template>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<form [formGroup]="newReqForm" (ngSubmit)="postRequest(newReqForm.value)" class="col-6">
+    <h3>New Request</h3>
+
+    <div>
+        <label class="label">Form</label>
+        <input class="form-control" type="date" formControlName="from" />
+        <!-- <p *ngIf="from.invalid && !from.pristine">Select a starting date</p> -->
+    </div>
+
+    <div>
+        <label class="label">To</label>
+        <input class="form-control" type="date" formControlName="to" />
+    </div>
+
+    <div class="form-group">
+        <label>Leave Type</label>
+        <select class="form-control" formControlName="selectedLType">
+            <option *ngFor="let key of keys" [value]="key" [label]="LTypes[key]"></option>
+        </select>
+        <!-- <p *ngIf="selectedLType.invalid && !selectedLType.pristine">Select a leave type for your request</p> -->
+    </div>
+
+    <div>
+        <button type="submit" [disabled]="!newReqForm.valid" class="btn btn-primary ">Submit</button>
+        <div>
+            <a [routerLink]="['/profile']">Back to my requests</a>
+        </div>
+    </div>
+</form>
+
+
+<!-- <form #newReq="ngForm" (ngSubmit)="postRequest(newReq.value)">
+    <h3>New Request</h3>
+
+    <div class="form-group">
+        <label>From</label>
+        <input class="form-control" type="date" name="from" [(ngModel)]="from">
+    </div>
+
+    <div class="form-group">
+        <label>To</label>
+        <input class="form-control" type="date" name="to" [(ngModel)]="to">
+    </div>
+
+    <div class="form-group">
+        <label>Leave Type</label>
+        <select class="form-control" name="selectedLType" [(ngModel)]="selectedLType">
+            <option *ngFor="let key of keys" [value]="key" [label]="LTypes[key]"></option>
+        </select>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary ">Submit</button>
+    </div>
+
+</form> -->

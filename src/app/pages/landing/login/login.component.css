@@ -1,0 +1,16 @@
+form div {
+padding-top: 10px
+}
+.container {
+    display: flex;
+    justify-content: center;
+}
+form {
+    padding-top: 50px 
+}
+label {
+    font-weight: bold;
+}
+div > p {
+    color: red;
+}
