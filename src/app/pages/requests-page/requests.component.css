@@ -6,6 +6,7 @@ td {
 .my-custom-scrollbar {
     height: 50%;
     overflow: auto;
+    overflow-x: auto;
 }
 
 .table-wrapper-scroll-y {

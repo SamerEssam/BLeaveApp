@@ -1,8 +1,8 @@
 <!-- import { moduleOrComponent } from 'path'; -->
 <div class="col-9 offset-1" style="margin-top: 40px; text-align: center; height: 820px;">
   <div class="table-wrapper-scroll-y my-custom-scrollbar">
-
     <table class="table table-striped">
+
       <thead>
         <tr>
           <th>Name</th>
@@ -21,7 +21,7 @@
           <td>{{request.from}}</td>
           <td>{{request.to}}</td>
 
-          <ng-container *ngIf="request.reqState == 'Pendding'; else elseTemplate">
+          <ng-container *ngIf="request.reqState == 'Pending'; else elseTemplate">
             <td class="btn-group">
               <input type="button" class="btn btn-success" value="Accept" (click)="acceptRequest(request.requestId)">
               <input type="button" class="btn btn-danger" value="Reject" (click)="rejectRequest(request.requestId)">

@@ -1,36 +1,39 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RequestViewModel } from '../models/RequestViewModel';
-import { environment as prodEnviroment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment'
 
 @Injectable()
 export class RequestsService {
 
   constructor(private requestServie: HttpClient) { }
 
-  uri = prodEnviroment.baseUrl;
+  uri = environment.baseUrl + "api/Requests/";
 
 
   getUserRequests() {
-    return this.requestServie.get(this.uri + "api/Requests/UserRequests")
+    return this.requestServie.get(this.uri + "UserRequests");
   }
 
   getMgrRequests() {
-    return this.requestServie.get(this.uri + "api/Requests/MgrRequests")
+    return this.requestServie.get(this.uri + "MgrRequests");
   }
 
   acceptRequest(id: number) {
-
     const body = new URLSearchParams();
-    return this.requestServie.post(this.uri + "api/Requests/acceptRequest/ " + id, body.toString())
+    return this.requestServie.get(this.uri + "acceptRequest/ " + id);
   }
 
   rejectRequest(id: number) {
-    return this.requestServie.post(this.uri + "api/Requests/rejectRequest" + id, {})
+    return this.requestServie.get(this.uri + "rejectRequest/" + id);
   }
 
   postRequest(Req: RequestViewModel) {
-    return this.requestServie.post(this.uri + "api/Requests", Req)
+    return this.requestServie.post(this.uri, Req);
   }
 
+  deleteRequest(id: number) {
+    // console.log(this.uri + "deleteRequest/" + id)
+    return this.requestServie.get(this.uri + "deleteRequest/" + id);
+  }
 }

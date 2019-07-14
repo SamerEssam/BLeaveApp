@@ -24,6 +24,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PostReqComponent } from './components/post-req/post-req.component';
 import { AuthGuard } from './services/auth-services/auth.guard';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { } from '@angular/material'
+import { Globals } from './Globals';
+import { ReqformDialogComponent } from './components/reqform-dialog/reqform-dialog.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,13 +42,16 @@ import { AuthGuard } from './services/auth-services/auth.guard';
     MyRequestsComponent,
     RequestsPageComponent,
     PostReqComponent,
+    ReqformDialogComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+  
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
@@ -51,7 +59,8 @@ import { AuthGuard } from './services/auth-services/auth.guard';
     RequestsService,
     BalancesService,
     AuthService,
-    AuthGuard
+    AuthGuard,
+    Globals
   ],
   bootstrap: [AppComponent]
 })

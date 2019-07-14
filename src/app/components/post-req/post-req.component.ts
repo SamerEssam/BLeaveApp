@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RequestsService } from 'src/app/services/requests.service';
 import { RequestViewModel } from 'src/app/models/RequestViewModel';
-import { LTypeEnum } from 'src/app/models/LeaveTypeEnum';
+import { LTypeEnum } from 'src/app/models/Enums';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 

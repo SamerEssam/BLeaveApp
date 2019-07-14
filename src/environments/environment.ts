@@ -4,7 +4,11 @@
 
 export const environment = {
   production: false,
+  // VS testing url
   baseUrl: "http://localhost:65478/",
+  
+  //CORS problem for IIS
+  // baseUrl: "http://localhost/bleave",
 };
 
 /*

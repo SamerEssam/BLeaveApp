@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
       const data = response;
       // console.log(data)
       window.localStorage.setItem('user', JSON.stringify(data));
-      // console.log(JSON.stringify(data))
+      console.log(JSON.stringify(data))
       this.router.navigate(['/profile']);
     }, (error:any)=> console.log(error))
   }

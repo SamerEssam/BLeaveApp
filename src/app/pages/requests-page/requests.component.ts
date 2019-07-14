@@ -21,8 +21,8 @@ export class RequestsPageComponent implements OnInit {
   retriveRequests() {
     this.requestService.getMgrRequests()
       .subscribe((data: any) => {
-        console.log(data)
-        console.log("Mgr ReqList" + JSON.stringify(data));
+        // console.log(data)
+        // console.log("Mgr ReqList" + JSON.stringify(data));
         this.reqList = data;
       },
         (error: any) => console.log(error))
@@ -30,15 +30,27 @@ export class RequestsPageComponent implements OnInit {
 
   acceptRequest(id: number) {
     this.requestService.acceptRequest(id).subscribe(
-      (data: any) => { console.log(data); this.ngOnInit(); },
-      (error: any) => { console.log("accept request error" + error) }
+      (data: any) => {
+        // console.log(data);
+        this.ngOnInit();
+      },
+      (error: any) => {
+        alert("accept request error");
+        console.log("accept request error " + JSON.stringify(error))
+      }
     )
   }
 
   rejectRequest(id: number) {
     return this.requestService.rejectRequest(id).subscribe(
-      (data: any) => { console.log(data); this.ngOnInit(); },
-      (error: any) => { console.log("reject request error" + error) }
+      (data: any) => {
+        // console.log(data);
+        this.ngOnInit();
+      },
+      (error: any) => {
+        alert("reject request error");
+        console.log("reject request error " + error)
+      }
     )
   }
 }

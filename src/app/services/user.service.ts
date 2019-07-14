@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment as prodEnviroment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment'
 
 @Injectable()
 export class UserService {
 
   constructor(private userHttpClient: HttpClient) { }
-  uri = prodEnviroment.baseUrl
+  uri = environment.baseUrl
+
+  getUserInfo() {
+    return this.userHttpClient.get(this.uri + "api/Account/CurrentUserInfo")
+  }
 
 
 }

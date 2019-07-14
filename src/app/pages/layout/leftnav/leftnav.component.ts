@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-leftnav',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LeftnavComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit() {
   }
 
+  logout(){
+    alert("Thanks");
+   return localStorage.removeItem("user");
+    // return this.router.navigate(["/login"])
+  }
 }

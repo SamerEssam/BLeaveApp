@@ -3,12 +3,14 @@
   <ul class="list-unstyled components">
 
     <li>
-        
-      <a [routerLink]="['/profile']" >Profile</a>
+
+      <a [routerLink]="['/profile']">Profile</a>
     </li>
     <li>
       <a [routerLink]="['/requests']">Requests</a>
     </li>
-    
+    <li>
+      <a [routerLink]="[ '/login']" (click)="logout()">Logout</a>
+    </li>
   </ul>
 </nav>

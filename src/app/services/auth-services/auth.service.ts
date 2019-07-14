@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment as prodEnviroment } from 'src/environments/environment.prod';
+import {environment} from 'src/environments/environment'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserLoginViewModel } from 'src/app/models/UserLoginViewModel';
 
@@ -7,7 +7,7 @@ import { UserLoginViewModel } from 'src/app/models/UserLoginViewModel';
 export class AuthService {
 
   constructor(private UserHttp: HttpClient) { }
-  uri = prodEnviroment.baseUrl;
+  uri = environment.baseUrl;
 
   isLogged() {
     const user = JSON.parse(localStorage.getItem('user'));

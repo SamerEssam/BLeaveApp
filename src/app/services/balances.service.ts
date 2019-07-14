@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '../../../node_modules/@angular/common/http';
-import { environment as prodEnviroment } from 'src/environments/environment.prod';
+import {environment} from 'src/environments/environment'
+
 
 @Injectable()
 export class BalancesService {
 
   constructor(private balanceHttpClient: HttpClient) { }
 
-  uri = prodEnviroment.baseUrl;
+  uri = environment.baseUrl;
 
 
   userBalances() {
