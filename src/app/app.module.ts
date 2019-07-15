@@ -25,9 +25,11 @@ import { PostReqComponent } from './components/post-req/post-req.component';
 import { AuthGuard } from './services/auth-services/auth.guard';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { } from '@angular/material'
 import { Globals } from './Globals';
 import { ReqformDialogComponent } from './components/reqform-dialog/reqform-dialog.component';
+
+import { } from '@angular/material'
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -51,17 +53,19 @@ import { ReqformDialogComponent } from './components/reqform-dialog/reqform-dial
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-  
+    MatDialogModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } },
     UserService,
     RequestsService,
     BalancesService,
     AuthService,
     AuthGuard,
-    Globals
+    Globals,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ReqformDialogComponent]
 })
 export class AppModule { }

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { RequestsService } from '../../../services/requests.service';
 import { EmpRequestsViewModel } from 'src/app/models/EmpRequestsViewModel';
 import { ReqStateEnum } from 'src/app/models/Enums';
+import { ReqformDialogComponent } from 'src/app/components/reqform-dialog/reqform-dialog.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-my-requests',
@@ -10,7 +12,10 @@ import { ReqStateEnum } from 'src/app/models/Enums';
 })
 export class MyRequestsComponent implements OnInit {
 
-  constructor(private requestsService: RequestsService) { }
+  constructor(
+    private requestsService: RequestsService,
+    // private reqformDialog: ReqformDialogComponent,
+    private dialog: MatDialog) { }
 
   ngOnInit() {
     this.getMyRequests();
@@ -30,12 +35,8 @@ export class MyRequestsComponent implements OnInit {
         });
   }
 
-  // aiKalam() {
-  //   let dialogRef = dialog.open(UserProfileComponent, {
-  //     height: '400px',
-  //     width: '600px',
-  //   });
-  // }
+
+  
 
   removeReq(reqid: number) {
     console.log(reqid);

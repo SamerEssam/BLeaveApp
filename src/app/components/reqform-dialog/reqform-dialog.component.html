@@ -1,1 +1,47 @@
-<p>reqform-dialog works!</p>
+<h1 mat-dialog-title>New Request</h1>
+
+<div mat-dialog-content>
+
+    <!-- <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="Choose a date of birth" formControlName="dateOfBirth"
+            id="dateOfBirth" readonly (click)="picker.open()">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field> -->
+
+    <form [formGroup]="newReqForm">
+        <div>
+            <label class="label">Form</label>
+            <input class="form-control" type="date" formControlName="from" />
+        </div>
+
+        <div>
+            <label class="label">To</label>
+            <input class="form-control" type="date" formControlName="to" />
+        </div>
+
+        <div class="form-group">
+            <label>Leave Type</label>
+            <select class="form-control" formControlName="selectedLType">
+                <option *ngFor="let key of keys" [value]="key" [label]="LTypes[key]"></option>
+            </select>
+        </div>
+    </form>
+    <div [hidden]="newReqForm.valid" style="color: red">*All fields are required</div>
+</div>
+
+<div mat-dialog-actions>
+    <div class="btn-group">
+        <input mat-button type="button" class="btn btn-success" value="Submit" (click)="onSubmitClick()"
+            [disabled]="!newReqForm.valid">
+        <!-- <input mat-button type="button" class="btn btn-danger" value="Close" (click)="dialogRef.close()"> -->
+        <button mat-raised-button matDialogClose class="btn btn-danger">Cancel</button>
+    </div>
+
+    <!-- <button mat-button (click)="onCloseClick(newReqForm.value)" color="primary">
+        Okays!
+    </button> -->
+    <!-- <button mat-button (click)="dialogRef.close()">
+        Cancel
+    </button> -->
+</div>
