@@ -1,23 +1,46 @@
 <h1 mat-dialog-title>New Request</h1>
 
-<div mat-dialog-content>
-
-    <!-- <mat-form-field>
-        <input matInput [matDatepicker]="picker" placeholder="Choose a date of birth" formControlName="dateOfBirth"
-            id="dateOfBirth" readonly (click)="picker.open()">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field> -->
-
-    <form [formGroup]="newReqForm">
+<form [formGroup]="newReqForm">
+    <div mat-dialog-content>
+        <!-- 
         <div>
             <label class="label">Form</label>
             <input class="form-control" type="date" formControlName="from" />
         </div>
-
         <div>
             <label class="label">To</label>
             <input class="form-control" type="date" formControlName="to" />
+        </div>
+        <div class="form-group">
+            <label>Leave Type</label>
+            <select class="form-control" formControlName="selectedLType">
+                <option *ngFor="let key of keys" [value]="key" [label]="LTypes[key]"></option>
+            </select>
+        </div>
+        <div [hidden]="newReqForm.valid" style="color: red">*All fields are required</div>   -->
+        <div>
+            <mat-form-field>
+                <input matInput [max]="maxDate" [matDatepicker]="start" placeholder="Choose a starting date"
+                    formControlName="from" readonly (click)="start.open()">
+                <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+                <mat-datepicker #start></mat-datepicker>
+
+                <mat-error *ngIf="from.hasError('required')">
+                    Starting date is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input matInput [max]="maxDate" [matDatepicker]="end" placeholder="Choose an end date"
+                    formControlName="to" readonly (click)="end.open()">
+                <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+                <mat-datepicker #end></mat-datepicker>
+
+                <mat-error *ngIf="to.hasError('required')">
+                    End date is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
         </div>
 
         <div class="form-group">
@@ -26,22 +49,20 @@
                 <option *ngFor="let key of keys" [value]="key" [label]="LTypes[key]"></option>
             </select>
         </div>
-    </form>
-    <div [hidden]="newReqForm.valid" style="color: red">*All fields are required</div>
-</div>
+        <!-- <p [hidden]="earlierLeaveError">
+            Starting date is earlier than today, Are you submitting a sick leave request
+        </p> -->
+        <div [hidden]="newReqForm.valid" style="color: red">*All fields are required</div>
 
-<div mat-dialog-actions>
-    <div class="btn-group">
-        <input mat-button type="button" class="btn btn-success" value="Submit" (click)="onSubmitClick()"
-            [disabled]="!newReqForm.valid">
-        <!-- <input mat-button type="button" class="btn btn-danger" value="Close" (click)="dialogRef.close()"> -->
-        <button mat-raised-button matDialogClose class="btn btn-danger">Cancel</button>
+
     </div>
 
-    <!-- <button mat-button (click)="onCloseClick(newReqForm.value)" color="primary">
-        Okays!
-    </button> -->
-    <!-- <button mat-button (click)="dialogRef.close()">
-        Cancel
-    </button> -->
-</div>
+    <div mat-dialog-actions align='end'>
+        <div class="btn-group">
+            <button mat-raised-button matDialogClose class="btn btn-danger">Cancel</button>
+            <input mat-raised-button type="button" class="btn btn-success" value="Submit" (click)="onSubmitClick()"
+                [disabled]="!newReqForm.valid">
+        </div>
+    </div>
+
+</form>

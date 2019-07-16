@@ -28,8 +28,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { Globals } from './Globals';
 import { ReqformDialogComponent } from './components/reqform-dialog/reqform-dialog.component';
 
-import { } from '@angular/material'
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+import { MatInputModule, MatNativeDateModule, MAT_DATE_LOCALE, } from '@angular/material'
+import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
+import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 
 @NgModule({
   declarations: [
@@ -53,11 +57,16 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule, MAT_DIALOG_DEFAULT_OPTI
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MatDialogModule,
+    MatFormFieldModule, MatDialogModule, MatInputModule,
+    MatDatepickerModule,
+    // MatNativeDateModule,
+    MatMomentDateModule
+
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } },
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
     UserService,
     RequestsService,
     BalancesService,
