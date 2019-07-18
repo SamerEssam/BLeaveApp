@@ -1,5 +1,5 @@
 export interface EmpRequestsViewModel {
-    id: number;
+    reqId: number;
     leaveType: string;
     from: Date | string;
     to: Date | string;

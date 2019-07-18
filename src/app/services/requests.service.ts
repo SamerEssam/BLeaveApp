@@ -28,12 +28,18 @@ export class RequestsService {
     return this.requestServie.get(this.uri + "rejectRequest/" + id);
   }
 
-  postRequest(Req: RequestViewModel) {
-    return this.requestServie.post(this.uri, Req);
+  postRequest(req: RequestViewModel) {
+    return this.requestServie.post(this.uri, req);
   }
 
   deleteRequest(id: number) {
     // console.log(this.uri + "deleteRequest/" + id)
     return this.requestServie.get(this.uri + "deleteRequest/" + id);
   }
+
+  editRequest(id: number, req: RequestViewModel) {
+    // console.log(this.uri + "deleteRequest/" + id)
+    return this.requestServie.post(this.uri + "alterRequest/" + id, req);
+  }
+
 }

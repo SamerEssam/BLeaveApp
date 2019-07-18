@@ -1,9 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { RequestsService } from '../../../services/requests.service';
 import { EmpRequestsViewModel } from 'src/app/models/EmpRequestsViewModel';
-import { ReqStateEnum } from 'src/app/models/Enums';
+import { ReqStateEnum, LTypeEnum } from 'src/app/models/Enums';
 import { ReqformDialogComponent } from 'src/app/components/reqform-dialog/reqform-dialog.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { RequestViewModel } from 'src/app/models/RequestViewModel';
+
+import { ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-my-requests',
@@ -12,44 +18,102 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 })
 export class MyRequestsComponent implements OnInit {
 
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  myReqList: Array<EmpRequestsViewModel>;
+  dataSource: MatTableDataSource<EmpRequestsViewModel>;
+
   constructor(
     private requestsService: RequestsService,
-    // private reqformDialog: ReqformDialogComponent,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog) {
 
-  ngOnInit() {
-    this.getMyRequests();
   }
 
-  myReqList: Array<EmpRequestsViewModel>;
+  ngOnInit() {
+
+    // this.dataSource = new MatTableDataSource(this.myReqList);
+
+    this.getMyRequests();
+
+  }
+
+
+
+
+  displayedColumns: string[] = ['leaveType', 'from', 'to', 'reqState', 'action'];
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
 
   getMyRequests() {
-    // console.log('getRequestsFromService');
     this.requestsService.getUserRequests()
       .subscribe((data: any) => {
-        // console.log("Request List ", data);
-        this.myReqList = data;
+        // this.myReqList = data;
+        this.dataSource = new MatTableDataSource(data);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        // console.log(data)
       },
         error => {
-          console.log(error);
+          console.error(error);
         });
   }
 
+  editRequest(editableRVM: EmpRequestsViewModel) {
+    let config = new MatDialogConfig();
+    config.width = '500px';
+    config.disableClose = true;
 
-  
+    const rVM = new RequestViewModel();
+    rVM.from = editableRVM.from;
+    rVM.to = editableRVM.to;
+    rVM.selectedLType = LTypeEnum[editableRVM.leaveType];
+    config.data = rVM;
+
+    let dialogRef = this.dialog.open(ReqformDialogComponent, config);
+
+    dialogRef.backdropClick().subscribe(_ => {
+      dialogRef.close("");
+    })
+
+    dialogRef.afterClosed().subscribe((req: RequestViewModel) => {
+      if (req != null && req.selectedLType != null && req.from != null && req.to != null) {
+        return this.requestsService.editRequest(editableRVM.reqId, req)
+          .subscribe(
+            (data: any) => {
+              console.log("Success edit request");
+              this.ngOnInit();
+            },
+            (error: any) => {
+              alert("Your request edditing faced a problem: \n" + JSON.stringify(error.error.message))
+            })
+
+      }
+    }, (error: any) => console.error("Editting error ==>" + error));
+  }
+
+  canEdit(canEditRVM: EmpRequestsViewModel) {
+    if (canEditRVM.reqState == ReqStateEnum[201])
+      return false
+    return true
+  }
 
   removeReq(reqid: number) {
-    console.log(reqid);
     return this.requestsService.deleteRequest(reqid).subscribe(
       (data: any) => this.ngOnInit(),
       (error: any) => console.log(error));
   }
 
-  canRemove(reqState: string) {
-    if (reqState == ReqStateEnum[202]) {
-      return true;
+  canRemove(canRemoveRVM: EmpRequestsViewModel) {
+    if (canRemoveRVM.reqState == ReqStateEnum[202] || (canRemoveRVM.reqState == ReqStateEnum[201] && canRemoveRVM.from <= new Date())) {
+      return false;
     }
-    return false
+    return true
   }
 
   color(empRequestsViewModel: EmpRequestsViewModel) {
@@ -69,6 +133,9 @@ export class MyRequestsComponent implements OnInit {
       'background-color': bckColor ? bckColor : "yellow",
       'color': bckColor ? "azure" : "black",
       'border-radius': '8px',
+      'display': 'block',
+      'width': '75%',
+      'transform': 'translate(0, 50%) '
     };
     return styles;
   }

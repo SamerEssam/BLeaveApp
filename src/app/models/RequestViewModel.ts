@@ -1,7 +1,7 @@
 export class RequestViewModel {
-    selectedLType: number;
-    from: Date | string;
-    to: Date | string;
+    public selectedLType: number = null;
+    public from: Date | string = "";
+    public to: Date | string = "";
 }
 
 

@@ -5,14 +5,21 @@ import { LTypeEnum } from 'src/app/models/Enums';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
-
-
+import * as _moment from 'moment';
+const moment = _moment;
 @Component({
   selector: 'app-reqform-dialog',
   templateUrl: './reqform-dialog.component.html',
   styleUrls: ['./reqform-dialog.component.css']
 })
 export class ReqformDialogComponent implements OnInit {
+
+  ReqForm: FormGroup;
+  requestViewModal: RequestViewModel;
+
+  keys: any;
+  private LTypes = LTypeEnum;
+  maxDate = this.calcMaxDate();
 
   ngOnInit() {
     this.keys = Object.keys(this.LTypes).filter(Number);
@@ -21,14 +28,11 @@ export class ReqformDialogComponent implements OnInit {
 
   constructor
     (public dialogRef: MatDialogRef<ReqformDialogComponent>,
-      @Inject(MAT_DIALOG_DATA) public data: RequestViewModel,
-      private formBuilder: FormBuilder) { }
+      @Inject(MAT_DIALOG_DATA) data: RequestViewModel, private formBuilder: FormBuilder) {
 
-  newReqForm: FormGroup;
-  keys: any;
-  private LTypes = LTypeEnum;
+    this.requestViewModal = data ? data : new RequestViewModel();
+  }
 
-  maxDate = this.calcMaxDate();
 
 
 
@@ -40,17 +44,17 @@ export class ReqformDialogComponent implements OnInit {
 
 
   createFormGroup() {
-    this.newReqForm = this.formBuilder.group({
-      from: new FormControl("", { validators: Validators.required }),
-      to: new FormControl("", { validators: Validators.required }),
-      selectedLType: new FormControl("", { validators: Validators.required })
+    this.ReqForm = this.formBuilder.group({
+      from: new FormControl(moment(this.requestViewModal.from), { validators: Validators.required }),
+      to: new FormControl(moment(this.requestViewModal.to), { validators: Validators.required }),
+      selectedLType: new FormControl(this.requestViewModal.selectedLType, { validators: Validators.required })
 
     })
   };
 
-  get from() { return this.newReqForm.get('from'); };
-  get to() { return this.newReqForm.get('to'); };
-  get selectedLType() { return this.newReqForm.get('selectedLType'); };
+  get from() { return this.ReqForm.get('from'); };
+  get to() { return this.ReqForm.get('to'); };
+  get selectedLType() { return this.ReqForm.get('selectedLType'); };
 
   // startdatechk() {
   //   let start = this.newReqForm.get('from');
@@ -61,20 +65,17 @@ export class ReqformDialogComponent implements OnInit {
   // }
 
   onSubmitClick() {
-    let req = this.newReqForm.value;
+    let req = this.ReqForm.value;
     if (req.selectedLType != null && req.from != null && req.to != null) {
 
-      alert("date :" + Date() + "; \n and req.from:" + req.from);
+      // alert("date :" + Date() + "; \n and req.from:" + req.from);
       if (req.from > req.to) {
         alert("Starting date can't be earlier than end date");
         return;
-      } else if (req.selectedLType != LTypeEnum.Sick && new Date(req.from).getDay < new Date().getDay) {
+      } else if (req.selectedLType != LTypeEnum.Sick && new Date(req.from) < new Date()) {
         alert("Are you submitting a sick leave request \n Starting date is earlier than today")
         return;
       } else {
-        // req.from.setMinutes((req.from.getMinutes() - req.from.getTimezoneOffset()));
-        // req.to.setMinutes((req.to.getMinutes() - req.to.getTimezoneOffset()));
-        alert(req.from);
         this.dialogRef.close(req);
       }
 

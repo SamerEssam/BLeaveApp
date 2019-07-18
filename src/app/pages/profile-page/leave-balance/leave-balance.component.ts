@@ -14,7 +14,8 @@ import { RequestViewModel } from 'src/app/models/RequestViewModel';
 })
 export class LeaveBalanceComponent implements OnInit {
 
-  constructor(private balancesService: BalancesService, private dialog: MatDialog, private requestService: RequestsService) { }
+  constructor(private balancesService: BalancesService,
+    private dialog: MatDialog, private requestService: RequestsService) { }
 
   ngOnInit() {
     this.getUserBalaces();
@@ -26,8 +27,9 @@ export class LeaveBalanceComponent implements OnInit {
   openDialog() {
     let config = new MatDialogConfig();
     config.width = '500px';
+    config.disableClose = true;
+
     let dialogRef = this.dialog.open(ReqformDialogComponent, config);
-    dialogRef.disableClose = true;
 
     dialogRef.backdropClick().subscribe(_ => {
       // Close the dialog
@@ -50,33 +52,6 @@ export class LeaveBalanceComponent implements OnInit {
     }, (error: any) => console.error("Posting error ==>" + error));
   }
 
-  // openDialog() {
-  //   let config = new MatDialogConfig();
-  //   config.width = '500px';
-  //   let dialogRef = this.dialog.open(ReqformDialogComponent, config);
-  //   dialogRef.disableClose = true;
-
-  //   dialogRef.backdropClick().subscribe(_ => {
-  //     // Close the dialog
-  //     dialogRef.close("");
-  //   })
-
-  //   dialogRef.afterClosed().subscribe((req: RequestViewModel) => {
-  //     // alert(JSON.stringify(request));
-
-  //     if (req != null && req.selectedLType != null && req.from != null && req.to != null) {
-  //       return this.requestService.postRequest(req)
-  //         .subscribe(
-  //           (data: any) => {
-  //             console.log("Success post reques" + req.to);
-  //           },
-  //           (error: any) => alert("error after" + JSON.stringify(error.error.message))
-  //         )
-  //     }
-
-  //   }, (error: any) => console.error(error));
-  // }
-
   getUserBalaces() {
     this.balancesService.userBalances().subscribe((data: Array<UserBalanceViewModel>) => {
       this.userBalances = data;
@@ -85,11 +60,6 @@ export class LeaveBalanceComponent implements OnInit {
         console.log("Lave balance component Error ====>" + error);
       });
   }
-
-
-
-
-
 
 }
 

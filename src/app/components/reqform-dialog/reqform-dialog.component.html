@@ -1,23 +1,7 @@
-<h1 mat-dialog-title>New Request</h1>
+<h1 mat-dialog-title>Request</h1>
 
-<form [formGroup]="newReqForm">
+<form [formGroup]="ReqForm">
     <div mat-dialog-content>
-        <!-- 
-        <div>
-            <label class="label">Form</label>
-            <input class="form-control" type="date" formControlName="from" />
-        </div>
-        <div>
-            <label class="label">To</label>
-            <input class="form-control" type="date" formControlName="to" />
-        </div>
-        <div class="form-group">
-            <label>Leave Type</label>
-            <select class="form-control" formControlName="selectedLType">
-                <option *ngFor="let key of keys" [value]="key" [label]="LTypes[key]"></option>
-            </select>
-        </div>
-        <div [hidden]="newReqForm.valid" style="color: red">*All fields are required</div>   -->
         <div>
             <mat-form-field>
                 <input matInput [max]="maxDate" [matDatepicker]="start" placeholder="Choose a starting date"
@@ -49,19 +33,14 @@
                 <option *ngFor="let key of keys" [value]="key" [label]="LTypes[key]"></option>
             </select>
         </div>
-        <!-- <p [hidden]="earlierLeaveError">
-            Starting date is earlier than today, Are you submitting a sick leave request
-        </p> -->
-        <div [hidden]="newReqForm.valid" style="color: red">*All fields are required</div>
-
-
+        <div [hidden]="ReqForm.valid" style="color: red">*All fields are required</div>
     </div>
 
     <div mat-dialog-actions align='end'>
         <div class="btn-group">
             <button mat-raised-button matDialogClose class="btn btn-danger">Cancel</button>
             <input mat-raised-button type="button" class="btn btn-success" value="Submit" (click)="onSubmitClick()"
-                [disabled]="!newReqForm.valid">
+                [disabled]="!ReqForm.valid">
         </div>
     </div>
 

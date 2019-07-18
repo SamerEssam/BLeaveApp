@@ -7,7 +7,7 @@ import { RequestsPageComponent } from './pages/requests-page/requests.component'
 
 
 
-import { PostReqComponent } from './components/post-req/post-req.component';
+// import { PostReqComponent } from './components/post-req/post-req.component';
 import { MyRequestsComponent } from './pages/profile-page/my-requests/my-requests.component';
 import { AuthGuard } from './services/auth-services/auth.guard';
 
@@ -20,7 +20,8 @@ const routes: Routes =
         {
           path: 'profile', component: ProfilePageComponent, children: [
             { path: '', component: MyRequestsComponent },
-            { path: 'newrequest', component: PostReqComponent }]
+            // { path: 'newrequest', component: PostReqComponent }
+          ]
         },
         { path: 'requests', component: RequestsPageComponent }
       ]
