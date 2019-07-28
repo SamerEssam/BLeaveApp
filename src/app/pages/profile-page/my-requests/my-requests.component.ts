@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { RequestsService } from '../../../services/requests.service';
 import { EmpRequestsViewModel } from 'src/app/models/EmpRequestsViewModel';
 import { ReqStateEnum, LTypeEnum } from 'src/app/models/Enums';
@@ -10,6 +10,7 @@ import { ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-my-requests',
@@ -23,6 +24,8 @@ export class MyRequestsComponent implements OnInit {
   myReqList: Array<EmpRequestsViewModel>;
   dataSource: MatTableDataSource<EmpRequestsViewModel>;
 
+  @Output() deleteApproved = new EventEmitter();
+
   constructor(
     private requestsService: RequestsService,
     private dialog: MatDialog) {
@@ -30,15 +33,8 @@ export class MyRequestsComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    // this.dataSource = new MatTableDataSource(this.myReqList);
-
     this.getMyRequests();
-
   }
-
-
-
 
   displayedColumns: string[] = ['leaveType', 'from', 'to', 'reqState', 'action'];
 
@@ -105,7 +101,10 @@ export class MyRequestsComponent implements OnInit {
 
   removeReq(reqid: number) {
     return this.requestsService.deleteRequest(reqid).subscribe(
-      (data: any) => this.ngOnInit(),
+      (data: any) => {
+        this.deleteApproved.emit("");
+        this.ngOnInit();
+      },
       (error: any) => console.log(error));
   }
 

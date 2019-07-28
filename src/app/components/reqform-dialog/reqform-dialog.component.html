@@ -4,8 +4,8 @@
     <div mat-dialog-content>
         <div>
             <mat-form-field>
-                <input matInput [max]="maxDate" [matDatepicker]="start" placeholder="Choose a starting date"
-                    formControlName="from" readonly (click)="start.open()">
+                <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="start"
+                (dateChange)="OnFromSelect($event)"  placeholder="Choose a starting date" formControlName="from" readonly (click)="start.open()">
                 <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
                 <mat-datepicker #start></mat-datepicker>
 
@@ -16,7 +16,7 @@
         </div>
         <div>
             <mat-form-field>
-                <input matInput [max]="maxDate" [matDatepicker]="end" placeholder="Choose an end date"
+                <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="end" placeholder="Choose an end date"
                     formControlName="to" readonly (click)="end.open()">
                 <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
                 <mat-datepicker #end></mat-datepicker>

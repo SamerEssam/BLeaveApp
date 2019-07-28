@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { RequestsService } from '../../services/requests.service';
+import { MyRequestsComponent } from './my-requests/my-requests.component';
+import {LeaveBalanceComponent  } from './leave-balance/leave-balance.component';
 
 @Component({
   selector: 'app-profile-page',
@@ -14,17 +16,16 @@ export class ProfilePageComponent implements OnInit {
     // this.getMyRequestsFromService();
   }
 
-  // private reqList = null;
+  @ViewChild(MyRequestsComponent, { static: false }) myRequestComponent: MyRequestsComponent;
+  @ViewChild(LeaveBalanceComponent, { static: false }) leaveBalanceComponent: LeaveBalanceComponent;
 
-  // getMyRequestsFromService() {
-  //   console.log('getRequestsFromService');
-  //   this.requestsService.getUserRequests()
-  //     .subscribe((data: any) => {
-  //       console.log("Request List ", data);
-  //       this.reqList = data;
-  //     },
-  //       error => {
-  //         console.log(error);
-  //       });
-  // }
+  refreshList() {
+    this.myRequestComponent.ngOnInit();
+  }
+
+  refreshBalance(){
+    this.leaveBalanceComponent.ngOnInit();
+  }
+
+
 }

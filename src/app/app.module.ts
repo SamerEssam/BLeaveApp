@@ -29,13 +29,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Globals } from './Globals';
 import { ReqformDialogComponent } from './components/reqform-dialog/reqform-dialog.component';
 
-import { MatInputModule, MatNativeDateModule, MAT_DATE_LOCALE, MatPaginatorModule, MatSortModule, } from '@angular/material'
+import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateModule } from '@angular/material-moment-adapter';
+
+import { MatInputModule, MatPaginatorModule, MatSortModule, } from '@angular/material'
 import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
-import { MatProgressSpinnerModule } from '@angular/material';
+// import { MatProgressSpinnerModule } from '@angular/material';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [
@@ -59,6 +62,7 @@ import { MatTableModule } from '@angular/material/table';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    MatProgressSpinnerModule,
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule,
@@ -66,7 +70,10 @@ import { MatTableModule } from '@angular/material/table';
     MatMomentDateModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MomentDateModule,
+    MatSidenavModule,
+
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

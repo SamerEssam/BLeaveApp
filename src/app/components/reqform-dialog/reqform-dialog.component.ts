@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import * as _moment from 'moment';
+
 const moment = _moment;
 @Component({
   selector: 'app-reqform-dialog',
@@ -20,6 +21,7 @@ export class ReqformDialogComponent implements OnInit {
   keys: any;
   private LTypes = LTypeEnum;
   maxDate = this.calcMaxDate();
+  minDate = this.calcMinDate();
 
   ngOnInit() {
     this.keys = Object.keys(this.LTypes).filter(Number);
@@ -33,15 +35,14 @@ export class ReqformDialogComponent implements OnInit {
     this.requestViewModal = data ? data : new RequestViewModel();
   }
 
-
-
-
+  calcMinDate() {
+    return new Date(new Date().getFullYear(), 1);
+  }
   calcMaxDate() {
     if (new Date().getMonth() <= 7)
       return new Date(new Date().getFullYear() + 1, 6);
     return new Date(new Date().getFullYear(), 6);
   };
-
 
   createFormGroup() {
     this.ReqForm = this.formBuilder.group({
@@ -56,6 +57,10 @@ export class ReqformDialogComponent implements OnInit {
   get to() { return this.ReqForm.get('to'); };
   get selectedLType() { return this.ReqForm.get('selectedLType'); };
 
+  OnFromSelect(value) {
+    this.ReqForm.get('to').setValue(value.value._d);
+  }
+
   // startdatechk() {
   //   let start = this.newReqForm.get('from');
   //   if (start.value != LTypeEnum.Sick && new Date(start.value).getDate() < new Date().getDate()) {
@@ -66,6 +71,7 @@ export class ReqformDialogComponent implements OnInit {
 
   onSubmitClick() {
     let req = this.ReqForm.value;
+    
     if (req.selectedLType != null && req.from != null && req.to != null) {
 
       // alert("date :" + Date() + "; \n and req.from:" + req.from);
@@ -73,6 +79,7 @@ export class ReqformDialogComponent implements OnInit {
         alert("Starting date can't be earlier than end date");
         return;
       } else if (req.selectedLType != LTypeEnum.Sick && new Date(req.from) < new Date()) {
+      
         alert("Are you submitting a sick leave request \n Starting date is earlier than today")
         return;
       } else {

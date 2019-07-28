@@ -1,10 +1,11 @@
-export interface UserMainInfoViewModel
+export class UserMainInfoViewModel
 {
-    Name: string;
-    DepName: string;
-    Title: string;
-    Email: string;
+    name: string;
+    depName: string;
+    title: string;
+    email: string;
 
-    MgrId: string;
-    MgrName: string;
+    mgrId: string;
+    mgrName: string;
+    imagePath:string = "BLogo.png";
 }
