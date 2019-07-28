@@ -1,7 +1,10 @@
-<div class="border-right" id="sidebar">
+<div id="sidebar">
   <div class="list-unstyled list-group list-group-flush">
-    <a class="list-group-item list-group-item-action" [routerLink]="['/profile']">Profile</a>
-    <a class="list-group-item list-group-item-action" [routerLink]="['/requests']">Requests</a>
-    <a class="list-group-item list-group-item-action" [routerLink]="[ '/login']" (click)="logout()">Logout</a>
+    <a class="list-group-item list-group-item-action" [routerLinkActive]="'active'"
+      [routerLink]="['/profile']">Profile</a>
+    <a class="list-group-item list-group-item-action" [routerLinkActive]="'active'"
+      [routerLink]="['/requests']">Requests</a>
+    <a class="list-group-item list-group-item-action" routerLinkActive="active" [routerLink]="[ '/login']"
+      (click)="logout()">Logout</a>
   </div>
 </div>

@@ -17,10 +17,12 @@ table {
   width: 100%;
 }
 
-th{
+th {
   height: 50%;
-  align-items: center
+  align-items: center;
+  margin: auto;
 }
+
 td, th {
   text-align: center;
   vertical-align: middle;

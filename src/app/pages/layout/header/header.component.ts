@@ -8,13 +8,13 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService) { 
+  }
 
   ngOnInit() {
-    this.userService.currentInfo().subscribe(info => this.userName = info.name);
-    console.log("****")
-    console.log(this.userName)
-    this.userService.getUserInfo();
+    // this.userService.currentInfo().subscribe(info => this.userName = info.name);
+    // console.log("****")
+    // console.log(this.userName)
     // this.imagePath = this.userService.userInfo.imagePath;
   }
 
