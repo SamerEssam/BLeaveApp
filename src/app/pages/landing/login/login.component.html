@@ -1,3 +1,8 @@
+<div class="cover" *ngIf="showSpinner">
+  <mat-spinner></mat-spinner>
+</div>
+
+
 <div class="container">
 
   <form class="col-4" [formGroup]="loginForm" (ngSubmit)="onSumbit(loginForm.value)">

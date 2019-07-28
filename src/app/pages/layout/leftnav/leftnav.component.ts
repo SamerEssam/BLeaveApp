@@ -8,14 +8,14 @@ import { Router } from '@angular/router';
 })
 export class LeftnavComponent implements OnInit {
 
-  constructor(private router:Router) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
-  logout(){
+  logout() {
     alert("Thanks");
-   return localStorage.removeItem("user");
-    // return this.router.navigate(["/login"])
+    this.router.navigate(["/login"])
+    return localStorage.removeItem("user");
   }
 }

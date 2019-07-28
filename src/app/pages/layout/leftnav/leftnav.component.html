@@ -1,16 +1,7 @@
-<nav id="sidebar">
-
-  <ul class="list-unstyled components">
-
-    <li>
-
-      <a [routerLink]="['/profile']">Profile</a>
-    </li>
-    <li>
-      <a [routerLink]="['/requests']">Requests</a>
-    </li>
-    <li>
-      <a [routerLink]="[ '/login']" (click)="logout()">Logout</a>
-    </li>
-  </ul>
-</nav>
+<div class="border-right" id="sidebar">
+  <div class="list-unstyled list-group list-group-flush">
+    <a class="list-group-item list-group-item-action" [routerLink]="['/profile']">Profile</a>
+    <a class="list-group-item list-group-item-action" [routerLink]="['/requests']">Requests</a>
+    <a class="list-group-item list-group-item-action" [routerLink]="[ '/login']" (click)="logout()">Logout</a>
+  </div>
+</div>

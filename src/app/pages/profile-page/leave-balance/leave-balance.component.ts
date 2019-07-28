@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../../services/user.service';
+import { Component, OnInit, ViewChild, Output } from '@angular/core';
 import { BalancesService } from '../../../services/balances.service';
 import { UserBalanceViewModel } from 'src/app/models/UserBalanceViewModel';
 import { ReqformDialogComponent } from 'src/app/components/reqform-dialog/reqform-dialog.component';
 import { MatDialog, MatDialogConfig, MatDatepickerInput } from '@angular/material';
 import { RequestsService } from 'src/app/services/requests.service';
 import { RequestViewModel } from 'src/app/models/RequestViewModel';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-leave-balance',
@@ -22,7 +22,7 @@ export class LeaveBalanceComponent implements OnInit {
   }
 
   userBalances: Array<UserBalanceViewModel>;
-
+  @Output() addReq = new EventEmitter()
 
   openDialog() {
     let config = new MatDialogConfig();
@@ -40,9 +40,12 @@ export class LeaveBalanceComponent implements OnInit {
       // alert(JSON.stringify(request));
 
       if (req != null && req.selectedLType != null && req.from != null && req.to != null) {
+        console.log(req)
+        console.log("********************************************************")
         return this.requestService.postRequest(req)
           .subscribe(
             (data: any) => {
+              this.addReq.emit("");
               console.log("Success post request");
             },
             (error: any) => alert("Your request faced a problem: \n" + JSON.stringify(error.error.message))
