@@ -2,10 +2,12 @@ import { Component, OnInit, ViewChild, Output } from '@angular/core';
 import { BalancesService } from '../../../services/balances.service';
 import { UserBalanceViewModel } from 'src/app/models/UserBalanceViewModel';
 import { ReqformDialogComponent } from 'src/app/components/reqform-dialog/reqform-dialog.component';
-import { MatDialog, MatDialogConfig, MatDatepickerInput } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatDatepickerInput, MatTableDataSource } from '@angular/material';
 import { RequestsService } from 'src/app/services/requests.service';
 import { RequestViewModel } from 'src/app/models/RequestViewModel';
 import { EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-leave-balance',
@@ -13,16 +15,21 @@ import { EventEmitter } from '@angular/core';
   styleUrls: ['./leave-balance.component.css']
 })
 export class LeaveBalanceComponent implements OnInit {
+  @Output() addReq = new EventEmitter()
+  userBalances$: Observable<UserBalanceViewModel[]>;
+
+
+  displayedColumns: string[] = ['leaveType', 'total', 'balance'];
+  dataSource: MatTableDataSource<UserBalanceViewModel>;
+
 
   constructor(private balancesService: BalancesService,
     private dialog: MatDialog, private requestService: RequestsService) { }
 
   ngOnInit() {
-    this.getUserBalaces();
+    this.userBalances$ = this.balancesService.userBalances();
   }
 
-  userBalances: Array<UserBalanceViewModel>;
-  @Output() addReq = new EventEmitter()
 
   openDialog() {
     let config = new MatDialogConfig();
@@ -55,14 +62,6 @@ export class LeaveBalanceComponent implements OnInit {
     }, (error: any) => console.error("Posting error ==>" + error));
   }
 
-  getUserBalaces() {
-    this.balancesService.userBalances().subscribe((data: Array<UserBalanceViewModel>) => {
-      this.userBalances = data;
-    },
-      error => {
-        console.log("Lave balance component Error ====>" + error);
-      });
-  }
 
 }
 

@@ -1,9 +1,6 @@
-<div class=" row">
-  <div class="col-4">
-    <app-leave-balance (addReq)="refreshList()"></app-leave-balance>
-  </div>
-  <div class="col-7 " >
-    <app-my-requests (deleteApproved)="refreshBalance()" ></app-my-requests>
-    <!-- <router-outlet></router-outlet> -->
+<div class="d-flex flex-column align-items-stretch">
+  <div class="d-flex flex-row flex-wrap align-content-stretch">
+    <app-leave-balance class="m-1" style="width: 35%" (addReq)="refreshList()"></app-leave-balance>
+    <app-my-requests class="m-1" style="flex:1" (deleteApproved)="refreshBalance()"></app-my-requests>
   </div>
 </div>

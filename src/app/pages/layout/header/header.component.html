@@ -1,5 +1,5 @@
-<div class="header navbar fixed-top">
+<div class="header navbar fixed-top d-flex flex-row" style="width:100% " *ngIf="userService.userInfoValue">
   <img src="assets\BLogo.png" alt="" id="logo">
   <!-- <img src="assets\{{imagePath}}" alt="" id="user" class="float-right rounded-circle"> -->
-  <h4 class="float-right" style="color: beige">{{userName}}</h4>
+  <h4 class="float-right" style="color: beige">{{userService.userInfoValue.name}}</h4>
 </div>

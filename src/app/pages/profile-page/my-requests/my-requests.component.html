@@ -2,43 +2,56 @@
   <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
 </mat-form-field> -->
 
-<div style="padding-top: 40px">
-  <table mat-table [dataSource]="dataSource" matSort class="table table-striped" style=" text-align: center;">
+<div class="card" style="height: 100%">
+  <div class="card-body d-flex flex-column">
+    <h5 class="card-title">My Requests</h5>
+    <div class="d-flex flex-column align-items-end" style="flex:1">
 
-    <ng-container matColumnDef="leaveType">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Leave Type </th>
-      <td mat-cell *matCellDef="let row"> {{row.leaveType}} </td>
-    </ng-container>
+      <table mat-table [dataSource]="dataSource" matSort class="table table-striped" style=" text-align: center;">
 
-    <ng-container matColumnDef="from">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> From </th>
-      <td mat-cell *matCellDef="let row"> {{row.from}} </td>
-    </ng-container>
+        <ng-container matColumnDef="leaveType">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Leave Type </th>
+          <td mat-cell *matCellDef="let row"> {{row.leaveType}} </td>
+        </ng-container>
 
-    <ng-container matColumnDef="to">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> To </th>
-      <td mat-cell *matCellDef="let row"> {{row.to}} </td>
-    </ng-container>
+        <ng-container matColumnDef="from">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> From </th>
+          <td mat-cell *matCellDef="let row"> {{row.from}} </td>
+        </ng-container>
 
-    <ng-container matColumnDef="reqState">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-      <td mat-cell *matCellDef="let row" [ngStyle]="getstyle(row)"> {{row.reqState}} </td>
-    </ng-container>
+        <ng-container matColumnDef="to">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> To </th>
+          <td mat-cell *matCellDef="let row"> {{row.to}} </td>
+        </ng-container>
 
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef> Actions </th>
-      <td mat-cell *matCellDef="let row">
-        <i class="fa fa-pencil" (click)="editRequest(row)" [hidden]=!canEdit(row) style="margin-right: 2mm"></i>
-        <i class="fa fa-trash" (click)="removeReq(row.reqId)" [hidden]=!canRemove(row) style="margin-right: 2mm"></i>
-      </td>
-    </ng-container>
+        <ng-container matColumnDef="reqState">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+          <td mat-cell *matCellDef="let row">
+            <div [ngStyle]="getstyle(row)">
+              {{row.reqState}}
+            </div>
+          </td>
+        </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-    </tr>
-  </table>
-  <mat-paginator [pageSizeOptions]="[5, 10]"></mat-paginator>
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let row">
+            <i class="fa fa-pencil" (click)="editRequest(row)" [hidden]=!canEdit(row) style="margin-right: 2mm"></i>
+            <i class="fa fa-trash" (click)="removeReq(row.reqId)" [hidden]=!canRemove(row)
+              style="margin-right: 2mm"></i>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+        </tr>
+      </table>
+      <mat-paginator class="w-100 mt-auto" [pageSizeOptions]="[4,8]"></mat-paginator>
+    </div>
+  </div>
 </div>
+
+
 
 <!-- <div style="padding-top: 40px">
     <div class="table-wrapper-scroll-y my-custom-scrollbar">

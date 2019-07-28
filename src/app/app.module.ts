@@ -25,6 +25,7 @@ import { FooterComponent } from './pages/layout/footer/footer.component';
 import { LeftnavComponent } from './pages/layout/leftnav/leftnav.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { PostReqComponent } from './components/post-req/post-req.component';
+import { NgHttpLoaderModule } from 'ng-http-loader'
 
 import { Globals } from './Globals';
 import { ReqformDialogComponent } from './components/reqform-dialog/reqform-dialog.component';
@@ -73,6 +74,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatPaginatorModule,
     MomentDateModule,
     MatSidenavModule,
+    // NgHttpLoaderModule.forRoot(),
 
   ],
   providers: [

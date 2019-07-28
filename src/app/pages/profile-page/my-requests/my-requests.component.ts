@@ -132,9 +132,8 @@ export class MyRequestsComponent implements OnInit {
       'background-color': bckColor ? bckColor : "yellow",
       'color': bckColor ? "azure" : "black",
       'border-radius': '8px',
-      'display': 'block',
       'width': '75%',
-      'transform': 'translate(0, 50%) '
+      'margin':'auto'
     };
     return styles;
   }

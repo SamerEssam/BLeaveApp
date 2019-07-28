@@ -11,12 +11,11 @@ import { MatSpinner } from '@angular/material';
 })
 export class LayoutComponent implements OnInit {
 
-  constructor(private userService: UserService, private globals: Globals) { }
+  constructor(private userService: UserService, private globals: Globals) {
+    this.userService.getUserInfo().subscribe()
+   }
 
   ngOnInit() {
-
   }
-
-
 
 }
