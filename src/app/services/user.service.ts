@@ -15,14 +15,10 @@ export class UserService {
 
   }
 
-
   get userInfoValue() {
     return this.userInfo.value
   }
 
-  // setData(val: UserMainInfoViewModel) {
-  //   this.userInfo.next(val);
-  // }
   getUserInfo() {
     return this.userHttpClient.get<UserMainInfoViewModel>(this.uri + "api/Account/CurrentUserInfo")
     .pipe(tap(data=>this.userInfo.next(data)));
@@ -34,8 +30,8 @@ export class UserService {
       // }, (error: any) => console.error(error));
   }
 
-  currentInfo() {
-    return this.userInfo.asObservable();
-  }
+  // currentInfo() {
+  //   return this.userInfo.asObservable();
+  // }
 
 }

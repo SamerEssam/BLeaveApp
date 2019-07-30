@@ -7,6 +7,7 @@ export const environment = {
   // VS testing url
   baseUrl: "http://localhost:65478/",
   // baseUrl: "http://10.90.22.17/bleave/",
+  refreshInterval_ms: 1000,
   
   //CORS problem for IIS
   // baseUrl: "http://localhost/bleave",

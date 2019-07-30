@@ -13,7 +13,7 @@ export class ProfilePageComponent implements OnInit {
   constructor(private requestsService: RequestsService) { }
 
   ngOnInit() {
-    // this.getMyRequestsFromService();
+    this.requestsService.getUserRequests().subscribe();
   }
 
   @ViewChild(MyRequestsComponent, { static: false }) myRequestComponent: MyRequestsComponent;

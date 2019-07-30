@@ -1,16 +1,18 @@
-import { Component, OnInit, Output } from '@angular/core';
-import { RequestsService } from '../../../services/requests.service';
+import { Component, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
+
+import { RequestsService } from 'src/app/services/requests.service';
 import { EmpRequestsViewModel } from 'src/app/models/EmpRequestsViewModel';
 import { ReqStateEnum, LTypeEnum } from 'src/app/models/Enums';
-import { ReqformDialogComponent } from 'src/app/components/reqform-dialog/reqform-dialog.component';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { RequestViewModel } from 'src/app/models/RequestViewModel';
+import { ReqformDialogComponent } from 'src/app/components/reqform-dialog/reqform-dialog.component';
+import { ConfirmationDialogComponent } from 'src/app/components/confirmation-dialog/confirmation-dialog.component';
 
-import { ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { EventEmitter } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-my-requests',
@@ -21,22 +23,32 @@ export class MyRequestsComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  myReqList: Array<EmpRequestsViewModel>;
-  dataSource: MatTableDataSource<EmpRequestsViewModel>;
+
+  empRequests: any;
+  interval: any;
+  // myReqList: Array<EmpRequestsViewModel>;
+  // dataSource: MatTableDataSource<Observable<EmpRequestsViewModel[]>>;
+  public dataSource: MatTableDataSource<EmpRequestsViewModel>;
+  displayedColumns: string[] = ['leaveType', 'from', 'to', 'reqState', 'action'];
 
   @Output() deleteApproved = new EventEmitter();
+  empRequests$: Observable<EmpRequestsViewModel[]>;
 
   constructor(
     private requestsService: RequestsService,
     private dialog: MatDialog) {
-
+    this.empRequests$ = this.requestsService.getUserRequests();
   }
 
   ngOnInit() {
-    this.getMyRequests();
+
+    this.interval = setInterval(() => {
+      // this.requestsService.getUserRequests().subscribe();
+      this.getMyRequests();
+      // this.getMyRequests()
+    }, 700);
   }
 
-  displayedColumns: string[] = ['leaveType', 'from', 'to', 'reqState', 'action'];
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -47,17 +59,28 @@ export class MyRequestsComponent implements OnInit {
   }
 
   getMyRequests() {
-    this.requestsService.getUserRequests()
-      .subscribe((data: any) => {
-        // this.myReqList = data;
+    this.empRequests$.subscribe(
+      (data: EmpRequestsViewModel[]) => {
+        //ToDo
+        // if (this.empRequests != data) {
+        //   this.empRequests = data;
+        //   console.log(this.empRequests == data)
+        //   console.log("empRequests")
+        //   console.log(this.empRequests)
+        //   console.log("data")
+        //   console.log(data)
+        // }
+
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-        // console.log(data)
-      },
-        error => {
-          console.error(error);
-        });
+
+        // rename the event...
+        this.deleteApproved.emit("");
+        // this.ngOnInit();
+        console.log("data change refresh")
+      }, error => console.error(error)
+    );
   }
 
   editRequest(editableRVM: EmpRequestsViewModel) {
@@ -77,35 +100,51 @@ export class MyRequestsComponent implements OnInit {
       dialogRef.close("");
     })
 
-    dialogRef.afterClosed().subscribe((req: RequestViewModel) => {
-      if (req != null && req.selectedLType != null && req.from != null && req.to != null) {
-        return this.requestsService.editRequest(editableRVM.reqId, req)
-          .subscribe(
+    dialogRef.afterClosed().subscribe(
+      (req: RequestViewModel) => {
+        if (req != null && req.selectedLType != null && req.from != null && req.to != null) {
+          return this.requestsService.editRequest(editableRVM.reqId, req).subscribe(
             (data: any) => {
               console.log("Success edit request");
+              // rename the event...
+              this.deleteApproved.emit("");
               this.ngOnInit();
             },
             (error: any) => {
               alert("Your request edditing faced a problem: \n" + JSON.stringify(error.error.message))
             })
-
-      }
-    }, (error: any) => console.error("Editting error ==>" + error));
+        }
+      }, (error: any) => console.error("Editting error ==>" + error));
   }
 
   canEdit(canEditRVM: EmpRequestsViewModel) {
-    if (canEditRVM.reqState == ReqStateEnum[201])
-      return false
-    return true
+    if (canEditRVM.reqState == ReqStateEnum[203])
+      return true
+    return false
   }
 
   removeReq(reqid: number) {
-    return this.requestsService.deleteRequest(reqid).subscribe(
-      (data: any) => {
-        this.deleteApproved.emit("");
-        this.ngOnInit();
-      },
-      (error: any) => console.log(error));
+
+    const config = new MatDialogConfig();
+    config.width = '350px';
+    config.data = "Do you confirm the deletion of this request?";
+
+    const confirmDialogRef = this.dialog.open(ConfirmationDialogComponent, config);
+
+    confirmDialogRef.backdropClick().subscribe(_ => {
+      confirmDialogRef.close("");
+    })
+
+    confirmDialogRef.afterClosed().subscribe(result => {
+      if (result == true) {
+        return this.requestsService.deleteRequest(reqid).subscribe(
+          (data: any) => {
+            this.deleteApproved.emit("");
+            this.ngOnInit();
+          },
+          (error: any) => console.log(error));
+      }
+    })
   }
 
   canRemove(canRemoveRVM: EmpRequestsViewModel) {
@@ -133,7 +172,7 @@ export class MyRequestsComponent implements OnInit {
       'color': bckColor ? "azure" : "black",
       'border-radius': '8px',
       'width': '75%',
-      'margin':'auto'
+      'margin': 'auto'
     };
     return styles;
   }
