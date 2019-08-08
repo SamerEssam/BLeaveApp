@@ -108,7 +108,7 @@ export class MyRequestsComponent implements OnInit {
               console.log("Success edit request");
               // rename the event...
               this.deleteApproved.emit("");
-              this.ngOnInit();
+              // this.ngOnInit(); //===========>1
             },
             (error: any) => {
               alert("Your request edditing faced a problem: \n" + JSON.stringify(error.error.message))
