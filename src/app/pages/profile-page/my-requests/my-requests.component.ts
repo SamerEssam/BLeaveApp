@@ -11,8 +11,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { Observable, interval } from 'rxjs';
+import { filter, map, mergeMap, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-my-requests',
@@ -29,6 +29,7 @@ export class MyRequestsComponent implements OnInit {
   // myReqList: Array<EmpRequestsViewModel>;
   // dataSource: MatTableDataSource<Observable<EmpRequestsViewModel[]>>;
   public dataSource: MatTableDataSource<EmpRequestsViewModel>;
+  public dataSource$: Observable<MatTableDataSource<EmpRequestsViewModel>>;
   displayedColumns: string[] = ['leaveType', 'from', 'to', 'reqState', 'action'];
 
   @Output() deleteApproved = new EventEmitter();
@@ -42,11 +43,11 @@ export class MyRequestsComponent implements OnInit {
 
   ngOnInit() {
 
-    this.interval = setInterval(() => {
-      // this.requestsService.getUserRequests().subscribe();
-      this.getMyRequests();
-      // this.getMyRequests()
-    }, 700);
+    this.getMyRequests();
+    // this.interval = setInterval(() => {
+    //   // this.requestsService.getUserRequests().subscribe();
+    //   // this.getMyRequests()
+    // }, 700);
   }
 
 
@@ -59,28 +60,37 @@ export class MyRequestsComponent implements OnInit {
   }
 
   getMyRequests() {
-    this.empRequests$.subscribe(
-      (data: EmpRequestsViewModel[]) => {
-        //ToDo
-        // if (this.empRequests != data) {
-        //   this.empRequests = data;
-        //   console.log(this.empRequests == data)
-        //   console.log("empRequests")
-        //   console.log(this.empRequests)
-        //   console.log("data")
-        //   console.log(data)
-        // }
+    this.dataSource$ =
+      interval(100000)
+        .pipe( startWith(0),mergeMap(() =>
+          this.empRequests$.pipe(map((data: EmpRequestsViewModel[]) => {
+            const dataSource = new MatTableDataSource(data);
+            dataSource.paginator = this.paginator;
+            dataSource.sort = this.sort;
+            return dataSource;
+          }))));
+    // this.empRequests$.subscribe(
+    //   (data: EmpRequestsViewModel[]) => {
+    //     //ToDo
+    //     // if (this.empRequests != data) {
+    //     //   this.empRequests = data;
+    //     //   console.log(this.empRequests == data)
+    //     //   console.log("empRequests")
+    //     //   console.log(this.empRequests)
+    //     //   console.log("data")
+    //     //   console.log(data)
+    //     // }
 
-        this.dataSource = new MatTableDataSource(data);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+    //     this.dataSource = new MatTableDataSource(data);
+    //     this.dataSource.paginator = this.paginator;
+    //     this.dataSource.sort = this.sort;
 
-        // rename the event...
-        this.deleteApproved.emit("");
-        // this.ngOnInit();
-        console.log("data change refresh")
-      }, error => console.error(error)
-    );
+    //     // rename the event...
+    //     this.deleteApproved.emit("");
+    //     // this.ngOnInit();
+    //     console.log("data change refresh")
+    //   }, error => console.error(error)
+    // );
   }
 
   editRequest(editableRVM: EmpRequestsViewModel) {
