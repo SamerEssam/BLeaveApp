@@ -21,8 +21,8 @@ export class RequestsPageComponent implements OnInit {
   retriveRequests() {
     this.requestService.getMgrRequests()
       .subscribe((data: any) => {
-        // console.log(data)
-        // console.log("Mgr ReqList" + JSON.stringify(data));
+        console.log("Mgr ReqList");
+        console.log(data)
         this.reqList = data;
       },
         (error: any) => console.log(error))

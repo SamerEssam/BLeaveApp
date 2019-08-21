@@ -58,7 +58,8 @@ export class ReqformDialogComponent implements OnInit {
   get selectedLType() { return this.ReqForm.get('selectedLType'); };
 
   OnFromSelect(value) {
-    this.ReqForm.get('to').setValue(value.value._d);
+    if (this.ReqForm.get('to').untouched)
+      this.ReqForm.get('to').setValue(value.value._d);
   }
 
   // startdatechk() {
@@ -71,7 +72,7 @@ export class ReqformDialogComponent implements OnInit {
 
   onSubmitClick() {
     let req = this.ReqForm.value;
-    
+
     if (req.selectedLType != null && req.from != null && req.to != null) {
 
       // alert("date :" + Date() + "; \n and req.from:" + req.from);
@@ -79,7 +80,7 @@ export class ReqformDialogComponent implements OnInit {
         alert("Starting date can't be earlier than end date");
         return;
       } else if (req.selectedLType != LTypeEnum.Sick && new Date(req.from) < new Date()) {
-      
+
         alert("Are you submitting a sick leave request \n Starting date is earlier than today")
         return;
       } else {

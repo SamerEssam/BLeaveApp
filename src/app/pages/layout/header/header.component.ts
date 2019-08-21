@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Globals } from 'src/app/Globals'
 import { UserService } from 'src/app/services/user.service';
+import { UserMainInfoViewModel } from 'src/app/models/UserMainInfoViewModel';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -8,18 +9,12 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private userService: UserService) { 
+  constructor(private userService: UserService) {
   }
 
   ngOnInit() {
-    // this.userService.currentInfo().subscribe(info => this.userName = info.name);
-    // console.log("****")
-    // console.log(this.userName)
-    // this.imagePath = this.userService.userInfo.imagePath;
+    this.userService.userInfo.subscribe(data => this.user = data)
   }
-
-  imagePath: string;
-  userName: string = "";
-
-
+  
+  user: UserMainInfoViewModel;
 }

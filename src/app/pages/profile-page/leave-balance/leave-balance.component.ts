@@ -18,7 +18,6 @@ export class LeaveBalanceComponent implements OnInit {
   @Output() addReq = new EventEmitter()
   userBalances$: Observable<UserBalanceViewModel[]>;
 
-
   displayedColumns: string[] = ['leaveType', 'total', 'balance'];
   dataSource: MatTableDataSource<UserBalanceViewModel>;
 

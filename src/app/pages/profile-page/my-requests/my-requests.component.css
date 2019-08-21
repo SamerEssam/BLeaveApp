@@ -1,3 +1,7 @@
+td i {
+  cursor: pointer;
+}
+
 .my-custom-scrollbar {
   height: 250px;
   overflow: auto;

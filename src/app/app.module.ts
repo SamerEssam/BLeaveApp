@@ -40,6 +40,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MyRequestsComponent,
     RequestsPageComponent,
     ReqformDialogComponent,
+    ConfirmationDialogComponent,
 
   ],
   imports: [
@@ -89,6 +91,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     Globals,
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ReqformDialogComponent]
+  entryComponents: [ReqformDialogComponent, ConfirmationDialogComponent]
 })
 export class AppModule { }
